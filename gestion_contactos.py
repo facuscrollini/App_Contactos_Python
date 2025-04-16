@@ -46,15 +46,15 @@ class GestionContactos:
             try:
                 nombre = input('Nombre de contacto a agregar: ')
                 telefono = input('Telefono de contacto a agregar: ')
-                email = input('Email de contacto a agregar: ')
+                email = input('Email de contacto a agregar (incluye @ y .): ')
                 nuevo_contacto = Contacto(nombre, telefono, email)
-                if "@" and "." in email:
+                if "@" and "." in email and email.strip() != "" and nombre.strip() != "" and telefono.strip() != "":
                     with open(self.nombre_archivo, 'a') as archivo:
                         archivo.write(f'{nuevo_contacto.id}, {nuevo_contacto.nombre}, {nuevo_contacto.telefono}, {nuevo_contacto.email}\n')
                     print(f'Nuevo contacto agregado: {nuevo_contacto}')
                 else: 
                     print('--------------------------------------')
-                    print('El campo de email debe contener "@" y "." ')
+                    print('Asegurate de que los campos contienen información y que el formato de email sea el requerido.')
                     print('--------------------------------------')
             
             except Exception as e:
@@ -81,7 +81,7 @@ class GestionContactos:
                     print('*** Usuario encontrado ***')
                     print(contacto_encontrado)
                 else:
-                    print('*** Usuario no encontrado ***')
+                    print('*** No existe un contacto con la información dada.***')
             except Exception as e:
                 print(f'Ha ocurrido un error: {e}')
                 
