@@ -1,6 +1,7 @@
 
 from contacto import Contacto
 import os.path
+import re
 
 class GestionContactos:
         
@@ -75,32 +76,144 @@ class GestionContactos:
             try:
                 for contacto in self.contactos:
                     if usuario_buscado in contacto.nombre.strip().lower():
-                        contacto_encontrado = contacto
+                        print('---------- Contacto encontrado: ----------')
+                        print(contacto)
+                        contacto_encontrado = True
 
-                if contacto_encontrado:
-                    print('*** Usuario encontrado ***')
-                    print(contacto_encontrado)
-                else:
+               
+                if not contacto_encontrado:
                     print('*** No existe un contacto con la información dada.***')
+                
+                pass
+
+                        
             except Exception as e:
                 print(f'Ha ocurrido un error: {e}')
                 
                 
-        def eliminar_contacto(self):
-            contacto_a_eliminar = input('Introduce el nombre del contacto a eliminar: ')
+        def eliminar_contacto(self, mostrar):
+            self.mostrar = mostrar
+            self.listar_contactos()
+            print(f'''-------Eliminar contacto-------
+                    ******Selecciona una opción(1-3):****** 
+                    1- Por id.
+                    2- Por nombre.
+                    3- Por teléfono.
+                    4- Por email.
+                    5- Cancelar''')
+            opcion = int(input('¿Qué opción desea realizar?: '))
+            if opcion == 1:
+                self.eliminar_por_id()
+            elif opcion == 2:
+                self.eliminar_por_nombre()
+            elif opcion == 3:
+                self.eliminar_por_telefono()
+            elif opcion == 4:
+                self.eliminar_por_email()
+            elif opcion == 5:
+                 mostrar = True
+            
+            
+        def eliminar_por_id(self):
+            id_eliminar = int(input('Por favor ingresa el id del contacto que desea eliminar: '))
             try:
+                
+                with open(self.nombre_archivo, 'r') as archivo:
+                    lineas = archivo.readlines()
+
+                with open(self.nombre_archivo, 'w') as archivo:
+                   for line in lineas:
+                       id, *_ = line.strip().split(',')
+                       id_int = int(id.strip())
+                       if id_int != id_eliminar:
+                           archivo.write(line)
+                        
+                            
+                print(f'Id eliminada: {id_eliminar}')
+                             
+            
+            
+            except Exception as e:
+                print(f'Ha ocurrido un error: {e}')
+        
+        def eliminar_por_nombre(self):
+            nombre_eliminar = input('Por favor ingresa el nombre del contacto que desea eliminar: ')
+            
+            try: 
                 with open(self.nombre_archivo, 'r') as archivo:
                     lineas = archivo.readlines()
                     
-                with open(self.nombre_archivo, 'w') as archivo:
-                    for linea in lineas:
-                        if contacto_a_eliminar not in linea:
-                            archivo.write(linea)
-                    print('***--- Contacto eliminado ---***')
-                    print(f'Se ha eliminado el contacto: {contacto_a_eliminar}')
-                  
+                print('Se han encontrado los siguientes contactos con el nombre dado: ')
+                    
+                with open(self.nombre_archivo, 'r') as archivo:
+                    for line in lineas: 
+                        _, nombre, *_ = line.strip().split(',')
+                        if  (nombre_eliminar.strip()).lower() in (nombre.strip()).lower() :
+                            print(line)
+                    
+                    self.eliminar_por_id()
+                            
             except Exception as e:
                 print(f'Ha ocurrido un error: {e}')
+
+        def eliminar_por_telefono(self):
+            telefono_eliminar = int((input('Por favor ingresa el telefono del contacto que desea eliminar (sin espacios): ')).strip())
+            
+            try: 
+                with open(self.nombre_archivo, 'r') as archivo:
+                    lineas = archivo.readlines()
+                    
+                print('Se han encontrado los siguientes contactos con el nombre dado: ')
+                    
+                with open(self.nombre_archivo, 'r') as archivo:
+                    for line in lineas: 
+                        _, _, telefono, *_ = line.strip().split(',')
+                        telefono_int = int(telefono)
+                        if  telefono_int == telefono_eliminar:
+                            print(line)
+                    
+                    self.eliminar_por_id()
+                            
+            except Exception as e:
+                print(f'Ha ocurrido un error: {e}')
+
+            
+            pass
+        
+        def eliminar_por_email(self):
+            email_eliminar = input('Por favor ingresa el telefono del contacto que desea eliminar (sin espacios): ')
+            
+            try: 
+                with open(self.nombre_archivo, 'r') as archivo:
+                    lineas = archivo.readlines()
+                    
+                print('Se han encontrado los siguientes contactos con el nombre dado: ')
+                    
+                with open(self.nombre_archivo, 'r') as archivo:
+                    for line in lineas: 
+                        *_, email = line.strip().split(',')
+                        if  (email_eliminar).strip()  in email:
+                            print(line)
+                    
+                    self.eliminar_por_id()
+                            
+            except Exception as e:
+                print(f'Ha ocurrido un error: {e}')
+            
+            # try:
+                
+            #     # with open(self.nombre_archivo, 'r') as archivo:
+            #     #     lineas = archivo.readlines()
+                    
+            #     # with open(self.nombre_archivo, 'w') as archivo:
+            #     #     for linea in lineas:
+            #     #         if contacto_a_eliminar not in linea:
+            #     #             archivo.write(linea)
+            #     #     print('***--- Contacto eliminado ---***')
+            #     #     print(f'Se ha eliminado el siguiente "Id": {contacto_a_eliminar}')
+                  
+            # except Exception as e:
+            #     print(f'Ha ocurrido un error: {e}')
             
         
         

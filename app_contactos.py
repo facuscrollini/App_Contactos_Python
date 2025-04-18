@@ -25,7 +25,7 @@ class AppContactos:
         elif opcion == 3:
             self.gestion_contactos.buscar_contacto()
         elif opcion == 4:
-            self.gestion_contactos.eliminar_contacto()
+            self.gestion_contactos.eliminar_contacto(mostrar)
         elif opcion == 5:
            print('Nos vemos pronto!')
            mostrar = None

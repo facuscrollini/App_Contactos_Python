@@ -1,7 +1,0 @@
-1, Alcides,675304234,alcidescon@gmailcom
-2, Roberto,722181442,roberxiri@gmail.com
-3, Facundo,692916064,facuscrollinic@gmail.com
-4, Jaime, 692 91 60 64, jaime@gmail.com
-5, Pepito, 691 654 123, pepe@gmail.com
-6, Nahuel, 5697, nahuel@gmail.com
-8, Juancito, 692 91 64 64, facu@gmail.com
